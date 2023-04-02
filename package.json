@@ -5,6 +5,10 @@
   "type": "module",
   "main": "main.js",
   "scripts": {},
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/BlfoorTurk/blf-paginator.git"
+  },
   "author": "BlfoorTurk",
   "license": "MIT"
 }
