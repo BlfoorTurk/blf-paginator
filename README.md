@@ -1,6 +1,6 @@
-# blf-paginator
+# pagify-js
 
-The blf-paginator Module is a JavaScript class that allows you to paginate an array of items. It splits the array into smaller arrays, based on a given number of items per page, and provides methods to navigate between the pages.
+The pagify-js Module is a JavaScript class that allows you to paginate an array of items. It splits the array into smaller arrays, based on a given number of items per page, and provides methods to navigate between the pages.
 
 # Constructor
 
