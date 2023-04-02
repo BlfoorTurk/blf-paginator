@@ -1,0 +1,10 @@
+{
+  "name": "blf-paginator",
+  "version": "1.0.0",
+  "description": "A paginator module written by BlfoorTurk",
+  "type": "module",
+  "main": "main.js",
+  "scripts": {},
+  "author": "BlfoorTurk",
+  "license": "ISC"
+}
