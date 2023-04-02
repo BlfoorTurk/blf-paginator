@@ -52,7 +52,7 @@ console.log(paginator.previous());
 // [1, 2, 3, 4, 5]
 
 const forth = paginator.go(3);
-console.log(page4);
+console.log(forth);
 // [16, 17, 18, 19, 20]
 
 const first = paginator.get(0);
