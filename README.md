@@ -1,6 +1,6 @@
-# pagify-js
+# paginix
 
-The pagify-js Module is a JavaScript class that allows you to paginate an array of items. It splits the array into smaller arrays, based on a given number of items per page, and provides methods to navigate between the pages.
+The paginix Module is a JavaScript class that allows you to paginate an array of items. It splits the array into smaller arrays, based on a given number of items per page, and provides methods to navigate between the pages.
 
 # Constructor
 
@@ -33,7 +33,7 @@ The Paginator class provides the following properties:<br>
 <br>
 
 ```javascript
-import Paginator from "pagify-js";
+import Paginator from "paginix";
 
 const items = [
   1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20,
