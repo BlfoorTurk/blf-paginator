@@ -1,9 +1,9 @@
 {
-  "name": "blf-paginator",
-  "version": "1.0.0",
-  "description": "A paginator module written by BlfoorTurk",
+  "name": "pagify-js",
+  "version": "0.0.1",
+  "description": "A paginator module that allows you to pagify arrays.",
   "type": "module",
-  "main": "main.js",
+  "main": "pagify.js",
   "scripts": {},
   "repository": {
     "type": "git",
