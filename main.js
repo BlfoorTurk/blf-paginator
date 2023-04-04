@@ -1,78 +1,56 @@
 export default class Paginator {
   #currentPage = 0;
-  #pages = [];
+  #pages;
+  #perPage;
+  #maxVls = [0];
 
-  constructor({ pages, perPage = 3, addRestToLastPage = true }) {
-    if (!pages || !Array.isArray(pages) || pages.length === 0)
-      throw new Error("Pages must be an array and not empty.");
+  static #err(name, msg) {
+    const err = new Error(msg);
+    err.name = name;
+    return err;
+  }
 
-    if (perPage < 1 || typeof perPage !== "number")
-      throw new Error(
-        "The number which is per page must be greater than 0 and a number."
+  constructor({ pages, perPage = 3 }) {
+    if (!pages || !Array.isArray(pages) || !pages?.length)
+      throw this.constructor.#err(
+        'PagesError',
+        'Pages must be an array and not empty.'
       );
 
-    if (typeof addRestToLastPage !== "boolean")
-      throw new Error("The addRestToLastPage must a boolean value.");
+    if (perPage < 0 || typeof perPage !== 'number')
+      throw this.constructor.#err(
+        'PerPageError',
+        'The number which is per page must be greater or equal than 0 and a number.'
+      );
 
-    const pagePiece = addRestToLastPage
-      ? Math.trunc(pages.length / perPage)
-      : pages.length % perPage
-      ? pages.length / perPage + 1
-      : pages.length / perPage;
-
-    for (let i = 1; i <= pagePiece; i++) this.#pages.push([]);
-
-    pages.forEach((el, i) => {
-      const page = Math.trunc(i / perPage);
-      this.#pages[page]?.push(el) ?? this.#pages.at(-1).push(el);
-    });
+    this.#pages = pages;
+    this.#perPage = perPage;
+    this.#maxVls.push(pages.length - 1);
   }
 
   next(count = 1) {
-    const el = this.#pages[this.#currentPage + count];
-    if (count === 1 && !el) {
-      this.#currentPage = 0;
-      return this.#pages.at(this.#currentPage);
-    }
-    if (typeof count !== "number" || !el)
-      throw new Error("It must be a valid number.");
+    if (this.get(this.#currentPage + count) === -1) return -1;
     this.#currentPage += count;
-    return this.go(this.#currentPage);
+    return this.get(this.#currentPage);
   }
 
   previous(count = 1) {
-    const el = this.#pages[this.#currentPage - count];
-    if (count === 1 && !el) {
-      this.#currentPage = this.#pages.length - 1;
-      return this.#pages[this.#currentPage];
-    }
-    if (typeof count !== "number" || !el)
-      throw new Error("It must be a valid number.");
+    if (this.get(this.#currentPage - count) === -1) return -1;
     this.#currentPage -= count;
-    return this.go(this.#currentPage);
+    return this.get(this.#currentPage);
   }
 
   go(index) {
-    if (
-      (index !== 0 && !index) ||
-      typeof index !== "number" ||
-      !this.#pages?.[index] ||
-      index < 0
-    )
-      throw new Error(`The argument must be a valid index. (zero based)`);
+    if (this.get(index) === -1) return -1;
     this.#currentPage = index;
-    return this.currentPage;
+    return this.get(this.#currentPage);
   }
 
   get(index) {
-    if (
-      (index !== 0 && !index) ||
-      typeof index !== "number" ||
-      !this.#pages?.[index] ||
-      index < 0
-    )
-      throw new Error(`The argument must be a valid index. (zero based)`);
-    return this.#pages[index];
+    const start = index * this.#perPage;
+    const end = (index + 1) * this.#perPage;
+    const page = this.#pages.slice(start, end);
+    return page.length ? page : -1;
   }
 
   get pages() {
@@ -80,10 +58,14 @@ export default class Paginator {
   }
 
   get currentPage() {
-    return this.#pages[this.#currentPage];
+    return this.get(this.#currentPage);
   }
 
   get currentPageIndex() {
     return this.#currentPage;
+  }
+
+  get itemsPerPage() {
+    return this.#perPage;
   }
 }
