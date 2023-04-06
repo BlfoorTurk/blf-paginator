@@ -8,30 +8,34 @@ The constructor accepts an object with the following properties:
 
 **pages**: An array of items to paginate. This parameter is required and must be an array.<br>
 **perPage**: The number of items to display per page. This parameter is optional. (defaults to _3_)<br>
+**zeroBased**: The argument that determines whether will the Paginator object be zero-based or not. (defaults to _true_)<br>
 
 # Methods
 
 The Paginator class provides the following methods:
-<br>
-**next(count)**: Moves to the next page. The count parameter is optional. If process goes wrong the output will be -1. (defaults to _1_)
-<br>
-**previous(count)**: Moves to the previous page. The count parameter is optional. If process goes wrong the output will be -1. (defaults to _1_)<br>
-**go(index)**: Moves to a specific page, based on the zero-based index. If process goes wrong the output will be -1.
-<br>
-**get(index)**: Retrieves the page at the specified zero-based index. If process goes wrong the output will be -1.
+
+**next(count)**: Moves to the next page. The count parameter is optional. If process goes wrong the output will be -1. (defaults to _1_)<br>
+**previous(count)**: Moves to the previous page. The count parameter is optional. If process goes wrong the output will be -1. (defaults to _1_<br>
+**go(index)**: Moves to a specific page, based on the zero-based index. If process goes wrong the output will be -1.<br>
+**get(index)**: Retrieves the page at the specified zero-based index. If process goes wrong the output will be -1.<br>
+**checkPlace()**: Checks the current page's location and returns either start or end or middle.<br>
 
 # Properties
 
-The Paginator class provides the following properties:<br>
-<br>
-**pages**: An array, containing the whole pagination array.
-<br>
-**currentPage**: An array of items representing the current page.
-<br>
-**currentPageIndex**: The zero-based index of the current page.
-<br>
-**itemsPerPage**: A number, representing how many items will be in any page.
-<br>
+The Paginator class provides the following properties:
+
+**pages**: An array, containing the whole pagination array.<br>
+**currentPage**: An array of items representing the current page.<br>
+**currentPageIndex**: The zero-based index of the current page.<br>
+**itemsPerPage**: A number, representing how many items will be in any page.<br>
+**pagesCount**: The number that specifies how many pages are there.<br>
+**lastPage**: Last page as an array.<br>
+**lastPageIndex**: Last page's index.<br>
+**firstPage**: First page as an array.<br>
+**firstPageIndex**: First page's index.<br>
+**isZeroBased**: Returns whether is the Paginator object zero-based or not. (as boolean)<br>
+
+# Example Code
 
 ```javascript
 import Paginator from 'paginix';
@@ -41,29 +45,60 @@ const helper = new Paginator({
   pages: [
     1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20,
   ],
+  zeroBased: false,
 });
 
+////////////////////////
 // Properties
-console.log(helper.pages);
-// output: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
-console.log(helper.itemsPerPage);
-// output: 5
-console.log(helper.currentPage);
-// output: [1, 2, 3, 4, 5]
-console.log(helper.currentPageIndex);
-// output: 0
 
-// Methods
-const nextPage = helper.next();
-console.log(nextPage);
+console.log(helper.pagesCount);
+// 4
+
+console.log(helper.pages);
+// [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
+
+console.log(helper.lastPageIndex);
+// 4
+
+console.log(helper.lastPage);
+// [16, 17, 18, 19, 20]
+
 console.log(helper.currentPage);
-// output: [6, 7, 8, 9, 10]
+// [1, 2, 3, 4, 5]
+
+console.log(helper.itemsPerPage);
+// 5
+
+console.log(helper.isZeroBased);
+// false
+
+console.log(helper.firstPage);
+// [1, 2, 3, 4, 5]
+
+console.log(helper.firstPageIndex);
+// 1
+
 console.log(helper.currentPageIndex);
-// output: 1
-console.log(helper.previous());
-// output: [1, 2, 3, 4, 5]
-console.log(helper.go(3));
-// output: [16, 17, 18, 19, 20]
-console.log(helper.get(0)); // NOT mutable
-// output: [1, 2, 3, 4, 5]
+// 1
+
+////////////////////////
+// Methods
+
+const next_2 = helper.next(2);
+console.log(next_2);
+// [11, 12, 13, 14, 15]
+
+const index_3 = helper.go(3);
+console.log(index_3);
+// [11, 12, 13, 14, 15]
+
+const firstPage = helper.previous(2);
+console.log(firstPage);
+// [1, 2, 3, 4, 5]
+
+console.log(helper.checkPlace());
+// start
+
+console.log(helper.get(2));
+// [6, 7, 8, 9, 10]
 ```
