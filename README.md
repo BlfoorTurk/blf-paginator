@@ -19,6 +19,7 @@ The Paginator class provides the following methods:
 **go(index)**: Moves to a specific page, based on the zero-based index. If process goes wrong the output will be -1.<br>
 **get(index)**: Retrieves the page at the specified zero-based index. If process goes wrong the output will be -1.<br>
 **checkPlace()**: Checks the current page's location and returns either start or end or middle.<br>
+**has(el, pageNumber)**: Checks does the pageNumber's page contains the element that you specified. (pageNumber is current page's index as default)<br>
 
 # Properties
 
@@ -38,7 +39,7 @@ The Paginator class provides the following properties:
 # Example Code
 
 ```javascript
-import Paginator from 'paginix';
+import Paginator from "paginix";
 
 const helper = new Paginator({
   perPage: 5,

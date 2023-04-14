@@ -6,16 +6,16 @@ export default class Paginator {
 
   constructor({ pages, perPage = 3, zeroBased = true }) {
     if (!pages || !Array.isArray(pages) || !pages?.length)
-      throw this._err('PagesError', 'Pages must be an array and not empty.');
+      throw this._err("PagesError", "Pages must be an array and not empty.");
 
-    if (perPage < 0 || typeof perPage !== 'number')
+    if (perPage < 0 || typeof perPage !== "number")
       throw this._err(
-        'PerPageError',
-        'The number which is per page must be greater or equal than 0 and a number.'
+        "PerPageError",
+        "The number which is per page must be greater or equal than 0 and a number."
       );
 
-    if (typeof zeroBased !== 'boolean')
-      throw this._err('ZeroBasedError', 'Zero based must be a boolean.');
+    if (typeof zeroBased !== "boolean")
+      throw this._err("ZeroBasedError", "Zero based must be a boolean.");
 
     this.#pages = pages;
     this.#perPage = perPage;
@@ -24,7 +24,7 @@ export default class Paginator {
   }
 
   next(count = 1) {
-    if (count === 1 && this.checkPlace() === 'end') {
+    if (count === 1 && this.checkPlace() === "end") {
       this.#currentPage = this.firstPageIndex;
       return this.get(this.#currentPage);
     }
@@ -34,7 +34,7 @@ export default class Paginator {
   }
 
   previous(count = 1) {
-    if (count === 1 && this.checkPlace() === 'start') {
+    if (count === 1 && this.checkPlace() === "start") {
       this.#currentPage = this.lastPageIndex;
       return this.get(this.#currentPage);
     }
@@ -62,13 +62,18 @@ export default class Paginator {
       !this.currentPageIndex ||
       (!this.isZeroBased && this.currentPageIndex === 1)
     )
-      return 'start';
+      return "start";
     if (
       (this.isZeroBased ? this.currentPageIndex + 1 : this.currentPageIndex) ===
       this.pagesCount
     )
-      return 'end';
-    return 'middle';
+      return "end";
+    return "middle";
+  }
+
+  has(el, pageNumber = this.currentPageIndex) {
+    if ((el ?? false) === false) return -1;
+    return this.get(pageNumber).includes(el);
   }
 
   _err(name, msg) {
@@ -123,3 +128,12 @@ export default class Paginator {
     return this.#zeroBased;
   }
 }
+
+const paginix = new Paginator({
+  pages: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+  perPage: 3,
+  zeroBased: false,
+});
+
+console.log(paginix.get(2));
+console.log(paginix.has(1, 2));
